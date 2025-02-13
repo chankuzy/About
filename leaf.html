@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me - Air Force Base Map</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Social Links Styling */
+        .social-links {
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 24px;
+            transition: 0.3s;
+        }
+
+        /* FontAwesome Brand Colors */
+        .social-links .fa-facebook { color: #1877F2; }
+        .social-links .fa-twitter { color: #1DA1F2; }
+        .social-links .fa-instagram { color: #E4405F; }
+        .social-links .fa-github { color: #ffffff; }
+
+        .social-links a:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- FontAwesome for Social Icons -->
+    
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <h1>Contact Me</h1>
+    <p>Find me at the Nigerian Air Force Base, Kaduna</p>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="https://facebook.com/yourprofile" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://twitter.com/yourprofile" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/yourprofile" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://github.com/yourprofile" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+
+    <script>
+        // Initialize the map with dark theme tiles
+        var map = L.map('map').setView([10.5194, 7.4405], 15);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap & CartoDB'
+        }).addTo(map);
+
+        // Add a marker for Air Force Base, Kaduna
+        L.marker([10.5194, 7.4405]).addTo(map)
+            .bindPopup("<b>Nigerian Air Force Base, Kaduna</b><br>Welcome to my location!")
+            .openPopup();
+    </script>
+
+</body>
+</html>

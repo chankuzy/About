@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Ibrahim - Portfolio</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Leaflet.js for Google Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        body { background: #0a0a0a; color: white; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        .bounce { animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        
+        /* Hero Image Border Animation */
+        .hero-img {
+            width: 130px;
+            height: 130px;
+            border: 4px solid;
+            border-radius: 50%;
+            transition: border-color 1s ease-in-out;
+        }
+
+        /* Typewriter Effect */
+        .typewriter { font-size: 1.5rem; font-weight: bold; }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Mobile Nav */
+        .nav-links {
+            transform: translateY(-200%);
+            transition: transform 0.5s ease-in-out;
+        }
+        .nav-links.show { transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Navbar -->
+        <nav class="fixed top-0 w-full p-4 bg-black shadow-md flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-300">Portfolio</h1>
+            <button @click="toggleMenu" class="text-2xl text-gray-300 focus:outline-none">
+                <i :class="menuOpen ? 'fa-solid fa-x' : 'fa-solid fa-bars'"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Nav Links -->
+        <div class="nav-links fixed top-16 left-0 w-full bg-black p-5 flex flex-col space-y-4 text-center text-gray-300" :class="{'show': menuOpen}">
+            <a href="#" class="hover:text-blue-500">Home</a>
+            <a href="#about" class="hover:text-blue-500">About</a>
+            <a href="#projects" class="hover:text-blue-500">Projects</a>
+            <a href="#contact" class="hover:text-blue-500">Contact</a>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="h-screen flex flex-col justify-center items-center text-center">
+            <img src="image.jpg" alt="Profile" class="hero-img border-gray-500">
+            <h1 class="text-3xl font-bold mt-4 bounce shadow-lg">Muhammad Ibrahim</h1>
+            <p class="typewriter mt-2">
+                <span :style="{ color: currentColor }">{{ currentText }}</span>
+                <span class="cursor" :style="{ backgroundColor: currentColor }"></span>
+            </p>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="p-10 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-blue-500">About Me</h2>
+            <p>I am a passionate web developer and ethical hacker, constantly pushing the limits of technology.</p>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="p-10 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-blue-500">Projects</h2>
+            <p>Coming Soon...</p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="p-10 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-blue-500">Contact Me</h2>
+            <div id="map" class="w-full h-60 mx-auto"></div>
+            <div class="flex justify-center mt-4 space-x-4">
+                <a href="https://www.linkedin.com/in/muhammad-ibrahim-1881972a5" class="text-blue-500 text-2xl"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/chankuzy" class="text-gray-500 text-2xl"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/chankuzy/" class="text-pink-500 text-2xl"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61556557599125" class="text-blue-700 text-2xl"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/2349120770399" class="text-green-500 text-2xl"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="p-4 bg-gray-900 text-center text-gray-400">
+            <p>&copy; 2025 Muhammad Ibrahim. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Vue Script -->
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    menuOpen: false,
+                    typewriterTexts: ["A Web Developer", "A Code Alchemist", "An Ethical Hacker"],
+                    typewriterColors: ["#00FFFF", "#FF00FF", "#FFD700"],
+                    currentText: "A Web Developer",
+                    currentColor: "#00FFFF",
+                    textIndex: 0
+                };
+            },
+            mounted() {
+                setInterval(() => {
+                    this.textIndex = (this.textIndex + 1) % this.typewriterTexts.length;
+                    this.currentText = "";
+                    this.currentColor = this.typewriterColors[this.textIndex];
+
+                    let fullText = this.typewriterTexts[this.textIndex];
+                    let index = 0;
+
+                    const typeWriter = setInterval(() => {
+                        if (index < fullText.length) {
+                            this.currentText += fullText[index];
+                            index++;
+                        } else {
+                            clearInterval(typeWriter);
+                        }
+                    }, 100);
+                }, 3000);
+
+                setInterval(() => {
+                    document.querySelector(".hero-img").style.borderColor = this.currentColor;
+                }, 3000);
+            },
+            methods: {
+                toggleMenu() {
+                    this.menuOpen = !this.menuOpen;
+                }
+            }
+        }).mount('#app');
+
+        // Initialize Leaflet.js Map
+        const map = L.map('map').setView([10.5194, 7.4408], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+    </script>
+</body>
+</html>
